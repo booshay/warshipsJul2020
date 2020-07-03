@@ -6,6 +6,7 @@ import BasesSummary from '../coords/BasesSummary';
 import Notifications from './Notifications';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
+import { Redirect } from 'react-router-dom';
 
 class Dashboard extends Component {
 
@@ -20,8 +21,9 @@ class Dashboard extends Component {
     }
 
     render() {
-        const { coords } = this.props;
-        const TypeOfMines = this.state.type === 'mines' ? <MinesSummary coords={coords} /> : <BasesSummary coords={coords} />;
+        const { coords, auth } = this.props;
+        if (!auth.uid) return <Redirect to={'/signIn'} />
+        const TypeOfMines = this.state.type === 'mines' ? <MinesSummary auth={auth} coords={coords} /> : <BasesSummary coords={coords} />;
         let typeStyle = {};
         this.state.type === 'bases' ? typeStyle = {
             bases: { backgroundColor: 'green', color: 'white', fontSize: '1.2em' },
@@ -50,7 +52,6 @@ class Dashboard extends Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state)
     return {
         coords: state.firestore.ordered.team,
         auth: state.firebase.auth

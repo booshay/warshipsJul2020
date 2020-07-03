@@ -7,7 +7,6 @@ import { Redirect } from 'react-router-dom'
 
 const Navbar = (props) => {
     const { auth, profile } = props;
-    if (!auth.uid) return <Redirect to='/signin' />
     const links = auth.uid ? <SignedInLinks profile={profile} /> : <SignedOutLinks />;
 
     return (

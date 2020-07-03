@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { addCoords } from '../../store/actions/coordActions';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 class AddCoords extends Component {
     state = {
@@ -22,7 +23,6 @@ class AddCoords extends Component {
         e.target.reset();
     }
     handleClick = value => () => {
-        console.log(this.state.lvl)
         this.setState({
             coordType: value,
             lvl: ''
@@ -30,6 +30,8 @@ class AddCoords extends Component {
     }
 
     render() {
+        const { auth } = this.props;
+        if (!auth.uid) return <Redirect to={'/signIn'} />
         let typeStyle = {};
         this.state.coordType === 'bases' ? typeStyle = {
             bases: { backgroundColor: 'green', color: 'white', fontSize: '1.2em' },
@@ -107,7 +109,8 @@ class AddCoords extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        coords: state.coord
+        // coords: state.coord,
+        auth: state.firebase.auth
     }
 }
 
