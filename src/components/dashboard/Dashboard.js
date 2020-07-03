@@ -21,7 +21,7 @@ class Dashboard extends Component {
     }
 
     render() {
-        const { coords, auth } = this.props;
+        const { coords, auth, notifications } = this.props;
         if (!auth.uid) return <Redirect to={'/signIn'} />
         const TypeOfMines = this.state.type === 'mines' ? <MinesSummary auth={auth} coords={coords} /> : <BasesSummary coords={coords} />;
         let typeStyle = {};
@@ -41,12 +41,11 @@ class Dashboard extends Component {
                         <button style={typeStyle.mines} className="typeSelectBtn btn btn-flat btn-medium" onClick={this.handleClick('mines')}>Mines</button>
                     </div>
                     <div className="row">
-                        <div className="col s12 m8"></div>
+                        <div className="col s12 m8">{TypeOfMines}</div>
                         <div className="col s11 m3 offset-s1 right">
-                            <Notifications />
+                            <Notifications notifications={notifications} />
                         </div>
                     </div>
-                    {TypeOfMines}
                 </div>
             );
         }
@@ -57,7 +56,8 @@ class Dashboard extends Component {
 const mapStateToProps = (state) => {
     return {
         coords: state.firestore.ordered.team,
-        auth: state.firebase.auth
+        auth: state.firebase.auth,
+        notifications: state.firestore.ordered.team
     }
 }
 
@@ -77,6 +77,13 @@ export default compose(
                 doc: props.auth.uid,
                 subcollections: [
                     { collection: 'rss' }
+                ]
+            },
+            {
+                collection: 'team',
+                doc: props.auth.uid,
+                subcollections: [
+                    { collection: 'notifications', limit: 10, orderBy: ['createdAt', 'desc'] }
                 ]
             }
         ])

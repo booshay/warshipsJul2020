@@ -1,5 +1,11 @@
-notifications, adding coords
+moved us to a temp collection for protection:
 
 maybe adding a user name field 
 
 sorting
+
+tile type keep all the same, uppercase or lowercase, titlecase??  convert it
+
+
+delete coords/update coords:
+notifications, deleting/updating coords

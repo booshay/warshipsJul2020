@@ -12,7 +12,8 @@ class AddCoords extends Component {
         y: '',
         lvl: '',
         type: '',
-        enhanced: ''
+        enhanced: '',
+        userName: ''
     }
     handleChange = (e) => {
         this.setState({ [e.target.id]: e.target.value })
@@ -47,19 +48,19 @@ class AddCoords extends Component {
                 <h5 className="grey-text text-darken-3">Add New Base</h5>
                 <div className="input-field">
                     <label htmlFor="base">Base Name</label>
-                    <input type="text" id="base" onChange={this.handleChange} />
+                    <input type="text" id="base" onChange={this.handleChange} required />
                 </div>
                 <div className="input-field">
                     <label htmlFor="sector">Map Sector</label>
-                    <input type="text" id="sector" onChange={this.handleChange} />
+                    <input type="text" id="sector" onChange={this.handleChange} required />
                 </div>
                 <div className="input-field">
                     <label htmlFor="x">X</label>
-                    <input type="text" id="x" onChange={this.handleChange} />
+                    <input type="text" id="x" onChange={this.handleChange} required />
                 </div>
                 <div className="input-field">
                     <label htmlFor="y">Y</label>
-                    <input type="text" id="y" onChange={this.handleChange} />
+                    <input type="text" id="y" onChange={this.handleChange} required />
                 </div>
                 <div className="input-field">
                     <button className="btn pink lighten-1">Submit</button>
@@ -71,23 +72,23 @@ class AddCoords extends Component {
                     <h5 className="grey-text text-darken-3">Add New Mine</h5>
                     <div className="input-field">
                         <label htmlFor="x">X</label>
-                        <input type="text" id="x" onChange={this.handleChange} />
+                        <input type="text" id="x" onChange={this.handleChange} required />
                     </div>
                     <div className="input-field">
                         <label htmlFor="y">Y</label>
-                        <input type="text" id="y" onChange={this.handleChange} />
+                        <input type="text" id="y" onChange={this.handleChange} required />
                     </div>
                     <div className="input-field">
                         <label htmlFor="lvl">Tile Level</label>
-                        <input type="text" id="lvl" onChange={this.handleChange} />
+                        <input type="text" id="lvl" onChange={this.handleChange} required />
                     </div>
                     <div className="input-field">
                         <label htmlFor="type">Tile Type</label>
-                        <input type="text" id="type" onChange={this.handleChange} />
+                        <input type="text" id="type" onChange={this.handleChange} required />
                     </div>
                     <div className="input-field">
                         <label htmlFor="enhanced">Enhanced</label>
-                        <input type="text" id="enhanced" onChange={this.handleChange} />
+                        <input type="text" id="enhanced" onChange={this.handleChange} required />
                     </div>
                     <div className="input-field">
                         <button className="btn pink lighten-1">Submit</button>
@@ -98,8 +99,14 @@ class AddCoords extends Component {
         return (
             <div className="container">
                 <div className="">
-                    <button style={typeStyle.bases} className="typeSelectBtn btn btn-flat btn-medium" onClick={this.handleClick('bases')}>Bases</button>
-                    <button style={typeStyle.mines} className="typeSelectBtn btn btn-flat btn-medium" onClick={this.handleClick('mines')}>Mines</button>
+                    <form>
+                        <button style={typeStyle.bases} className="typeSelectBtn btn btn-flat btn-medium" onClick={this.handleClick('bases')}>Bases</button>
+                        <button style={typeStyle.mines} className="typeSelectBtn btn btn-flat btn-medium" onClick={this.handleClick('mines')}>Mines</button>
+                        <div className="input-field">
+                            <label htmlFor="userName">Your name in the game:</label>
+                            <input type="text" id="userName" onChange={this.handleChange} required />
+                        </div>
+                    </form>
                 </div>
                 {Form}
             </div>
