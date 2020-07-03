@@ -1,0 +1,5 @@
+notifications, adding coords
+
+maybe adding a user name field 
+
+sorting

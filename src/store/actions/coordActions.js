@@ -4,10 +4,10 @@ export const addCoords = (coords) => {
         const firestore = getFirestore();
         const profile = getState().firebase.profile;
         const teamId = getState().firebase.auth.uid;
-        const coordType = coords.coordType;
+        const coordType = coords.coordType === 'bases' ? 'rss' : 'mine';
         console.log(profile)
         // firestore.collection('projects').add({  //fix this line to the correct subcollection
-        firestore.collection('projects').doc(teamId).collection(coordType).add({
+        firestore.collection('team').doc(teamId).collection(coordType).add({
             ...coords,
             fn: 'mark',
             ln: 'b',
