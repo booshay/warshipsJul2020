@@ -32,22 +32,25 @@ class Dashboard extends Component {
             mines: { backgroundColor: 'green', color: 'white', fontSize: '1.2em' },
             bases: { color: 'grey', fontSize: '.8em' }
         }
-        return (
-            <div className="container center-align">
-                <p className="title">Select type:</p>
-                <div className="">
-                    <button style={typeStyle.bases} className="typeSelectBtn btn btn-flat btn-medium" onClick={this.handleClick('bases')}>Bases</button>
-                    <button style={typeStyle.mines} className="typeSelectBtn btn btn-flat btn-medium" onClick={this.handleClick('mines')}>Mines</button>
-                </div>
-                <div className="row">
-                    <div className="col s12 m8"></div>
-                    <div className="col s11 m3 offset-s1 right">
-                        <Notifications />
+        if (coords) {
+            return (
+                <div className="container center-align">
+                    <p className="title">Select type:</p>
+                    <div className="">
+                        <button style={typeStyle.bases} className="typeSelectBtn btn btn-flat btn-medium" onClick={this.handleClick('bases')}>Bases</button>
+                        <button style={typeStyle.mines} className="typeSelectBtn btn btn-flat btn-medium" onClick={this.handleClick('mines')}>Mines</button>
                     </div>
+                    <div className="row">
+                        <div className="col s12 m8"></div>
+                        <div className="col s11 m3 offset-s1 right">
+                            <Notifications />
+                        </div>
+                    </div>
+                    {TypeOfMines}
                 </div>
-                {TypeOfMines}
-            </div>
-        );
+            );
+        }
+        else return null
     }
 }
 
@@ -60,22 +63,23 @@ const mapStateToProps = (state) => {
 
 export default compose(
     connect(mapStateToProps),
-    firestoreConnect([
-        {
-            collection: 'team',
-            doc: "CHSFG8Y7UrcWAbtL1HaUqjxYRyf1",
-            subcollections: [
-                { collection: 'mine' }
-            ]
-        },
-        {
-            collection: 'team',
-            doc: "CHSFG8Y7UrcWAbtL1HaUqjxYRyf1",
-            subcollections: [
-                { collection: 'rss' }
-            ]
-        }
-    ])
+    firestoreConnect(props =>
+        [
+            {
+                collection: 'team',
+                doc: props.auth.uid,
+                subcollections: [
+                    { collection: 'mine' }
+                ]
+            },
+            {
+                collection: 'team',
+                doc: props.auth.uid,
+                subcollections: [
+                    { collection: 'rss' }
+                ]
+            }
+        ])
 )(Dashboard);
 
 /*
